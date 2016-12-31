@@ -133,7 +133,7 @@ class YiAPI():
 			self.res= False
 			return
 
-		res= self.cmd(YiAPI.startSession)
+		res= self.cmd(startSession)
 		if res<0:
 			self.sock= None
 			self.res= False
@@ -143,7 +143,7 @@ class YiAPI():
 
 	#shoud be called at very end to tell camera it's released
 	def close(self):
-		self.cmd(YiAPI.stopSession)
+		self.cmd(stopSession)
 
 		self.sock= None
 
