@@ -23,13 +23,14 @@ if __name__ == '__main__':
 
 	
 	try:
-		args= cParser.parse_args()
+		args= vars(cParser.parse_args())
 	except:
 		sys.exit(0)
 
 
 	setAny= False
-	for argn,argv in vars(args).items():
+	argsA= {}
+	for argn,argv in args.items():
 		if argv:
 			setAny= True
 			break
