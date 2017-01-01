@@ -10,8 +10,8 @@ if __name__ == '__main__':
 
 	for cmd in yiAPI.registeredCommands:
 		if cmd.names:
-			if cmd.limit:
-				limitZip= list(zip(range(0,len(cmd.limit)), cmd.limit))
+			if cmd.values:
+				limitZip= list(zip(range(0,len(cmd.values)), cmd.values))
 				cParser.add_argument(('-%s' % cmd.commandName),
 					choices=list(str(a) for a,b in limitZip),
 					help=str(dict(limitZip))
