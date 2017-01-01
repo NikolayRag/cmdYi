@@ -1,6 +1,6 @@
 import argparse, sys
 
-from cmdyi import *
+import cmdyi
 import yi.yiAPI as yiAPI
 from kiLog import *
 
@@ -42,8 +42,6 @@ if __name__ == '__main__':
 
 
 	kiLog.states(False, ok=False, warn=False)
-#	kiLog.states('', ok=True)
 
-	print(args)
 
-#	cmdyi.execute(args)
+	cmdyi.execute(args)
