@@ -1,14 +1,14 @@
 import argparse, sys
 
 import cmdyi
-import yi.yiAPI as yiAPI
+import Yi4kAPI
 from kiLog import *
 
 
 if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control.')
 
-	for cmd in yiAPI.registeredCommands:
+	for cmd in Yi4kAPI.commands:
 		if cmd.names:
 			if cmd.values:
 				limitZip= list(zip(range(0,len(cmd.values)), cmd.values))
