@@ -9,7 +9,7 @@ if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control.')
 
 	for cmd in Yi4kAPI.commands:
-		if cmd.names:
+		if cmd.variable:
 			if cmd.values:
 				limitZip= list(zip(range(0,len(cmd.values)), cmd.values))
 				cParser.add_argument(('-%s' % cmd.commandName),
