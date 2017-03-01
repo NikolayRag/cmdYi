@@ -2,7 +2,9 @@ import argparse, sys
 
 import cmdyi
 import Yi4kAPI
-from kiLog import *
+
+import kiLog
+kiLog.names(('',))
 
 
 if __name__ == '__main__':
@@ -39,9 +41,6 @@ if __name__ == '__main__':
 		cParser.print_help()
 		sys.exit(0)
 
-
-
-	kiLog.states(False, ok=False, warn=False)
 
 
 	cmdyi.execute(args)

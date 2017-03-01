@@ -1,12 +1,12 @@
-import time
+import time, logging
 import Yi4kAPI
-from kiLog import *
+
 
 def execute(_args):
 	yi= Yi4kAPI.YiAPI()
 
-	if not yi.res:
-		kiLog.err('Camera not found')
+	if not yi.sock:
+		logging.error('Camera not found')
 		return
 
 	if _args['stopRecording']:
