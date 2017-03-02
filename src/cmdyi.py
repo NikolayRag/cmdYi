@@ -103,4 +103,8 @@ def execute(_args):
 				print("%s: %s" % (cName, res))
 
 
+
+	if _args['suspend']:
+		input("Press Enter to finish.")
+
 	yi.close()

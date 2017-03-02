@@ -10,6 +10,7 @@ kiLog.names(('',))
 if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control.')
 
+	cParser.add_argument('-suspend', action='store_true', help='Wait for keypress for exit')
 	for cmd in Yi4kAPI.commands:
 		if cmd.variable:
 			if cmd.values:
