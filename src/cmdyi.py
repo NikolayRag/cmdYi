@@ -90,6 +90,8 @@ def execute(_args):
 		logging.error('Camera not found')
 		return
 
+	yi.cmd(Yi4kAPI.startViewFinder)
+
 
 	for cCmd in cmdA:
 		cName= '_'.join( cCmd.commandName.split('-') )
