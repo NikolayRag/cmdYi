@@ -108,7 +108,7 @@ def execute(_args):
 
 
 
-	if _args['suspend']:
+	if _args['listen']:
 		input("Press Enter to finish...\n")
 
 	yi.close()

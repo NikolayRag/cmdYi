@@ -8,10 +8,9 @@ kiLog.names(('',))
 
 
 if __name__ == '__main__':
-	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control.')
+	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control. v1.2')
 
-	cParser.add_argument('-suspend', action='store_true', help='Wait for keypress for exit')
-	cParser.add_argument('-listen', action='store_true', help='Report camera notification messages')
+	cParser.add_argument('-listen', action='store_true', help='Report camera notification messages till keypress.')
 
 	for cmd in Yi4kAPI.commands:
 		if cmd.variable:
