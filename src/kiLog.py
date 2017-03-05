@@ -46,4 +46,3 @@ def names(_names, _state=True):
 def config(level= WARNING):
 	logging.basicConfig(level= level, format= '%(name)s %(levelname)s: %(message)s')
 
-config(DEBUG)

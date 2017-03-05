@@ -99,7 +99,6 @@ def execute(_args):
 	for cCmd in cmdA:
 		cName= '_'.join( cCmd.commandName.split('-') )
 		if _args[cName] not in (None,False):
-			print(cCmd.values)
 			if cCmd.values:
 				res= yi.cmd(cCmd, cCmd.values[int(_args[cName])])
 				print("%s: %s, %s" % (cName, cCmd.values.index(res),res))
@@ -110,9 +109,10 @@ def execute(_args):
 
 
 	if _args['suspend']:
-		input("Press Enter to finish.\n")
+		input("Press Enter to finish...\n")
 
 	yi.close()
+
 
 
 
