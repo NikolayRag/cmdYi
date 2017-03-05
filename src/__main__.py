@@ -2,14 +2,19 @@ import argparse, sys
 
 import cmdyi
 import Yi4kAPI
-from kiLog import *
+
+import kiLog
+kiLog.names(('',))
 
 
 if __name__ == '__main__':
 	cParser= argparse.ArgumentParser(description= 'Yi 4k remote control.')
 
+	cParser.add_argument('-suspend', action='store_true', help='Wait for keypress for exit')
+	cParser.add_argument('-listen', action='store_true', help='Report camera notification messages')
+
 	for cmd in Yi4kAPI.commands:
-		if cmd.names:
+		if cmd.variable:
 			if cmd.values:
 				limitZip= list(zip(range(0,len(cmd.values)), cmd.values))
 				cParser.add_argument(('-%s' % cmd.commandName),
@@ -41,7 +46,7 @@ if __name__ == '__main__':
 
 
 
-	kiLog.states(False, ok=False, warn=False)
-
-
 	cmdyi.execute(args)
+
+	import os
+	os._exit(0)

@@ -1,120 +1,48 @@
-import inspect
-
-from kiSupport import *
-
-class kiLog():
-	#statical collection
-	contexts= {
-		False:{	#all unspecified
-			    'verb':[False, 'verb']
-			  , 'ok':[True, 'log']
-			  , 'warn':[True, 'warning']
-			  , 'err':[True, 'error']
-		}
-	}
+'''
+Modify logging output by adding class name
+'''
+import logging, inspect
 
 
-	@staticmethod
-	def getCtx(_ctx, _create=False):
-		cCtx= getA(kiLog.contexts, _ctx)
-		if not cCtx:
-			defaultCtx= kiLog.contexts[False]
-			cCtx= {
-				  'verb': [defaultCtx['verb'][0], str(_ctx)+(' ' if _ctx else '')+defaultCtx['verb'][1]]
-				, 'ok': [defaultCtx['ok'][0], str(_ctx)+(' ' if _ctx else '')+defaultCtx['ok'][1]]
-				, 'warn': [defaultCtx['warn'][0], str(_ctx)+(' ' if _ctx else '')+defaultCtx['warn'][1]]
-				, 'err': [defaultCtx['err'][0], str(_ctx)+(' ' if _ctx else '')+defaultCtx['err'][1]]
-			}
-
-			if _create:
-				kiLog.contexts[_ctx]= cCtx
-
-		return cCtx
+DEBUG= logging.DEBUG
+INFO= logging.INFO
+WARNING= logging.WARNING
+ERROR= logging.ERROR
+CRITICAL= logging.CRITICAL
 
 
-	@staticmethod
-	def prefixes(_prefix=None, verb=None, ok=None, warn=None, err=None):
-		if _prefix==None:
-			_prefix= kiLog.caller()
-		cCtx= kiLog.getCtx(_prefix, True)
+namesAllowed= {}
 
-		if verb!=None:
-			cCtx['verb'][1]= str(verb)
-		if ok!=None:
-			cCtx['ok'][1]= str(ok)
-		if warn!=None:
-			cCtx['warn'][1]= str(warn)
-		if err!=None:
-			cCtx['err'][1]= str(err)
+def hook(_name, _level, _fn, _ln, _msg, _args, _exInfo, _func, _stack):
+	stack= inspect.stack()
+	callObj= stack[5][0].f_locals #skip stack to first 'outer' level
+	_name= (
+		('self' in callObj)
+	 	and hasattr(callObj['self'],'__class__')
+	 	and callObj['self'].__class__.__name__
+	 	or ''
+ 	)
 
-		return cCtx
+	if len(namesAllowed):
+		if not (_name in namesAllowed):
+			_level= -1
 
+	return logging.LogRecord(_name, _level, _fn, _ln, _msg, _args, _exInfo)
 
-	@staticmethod
-	def states(_prefix=None, verb=None, ok=None, warn=None, err=None):
-		if _prefix==None:
-			_prefix= kiLog.caller()
-		cCtx= kiLog.getCtx(_prefix, True)
-
-		if verb!=None:
-			cCtx['verb'][0]= not not verb
-		if ok!=None:
-			cCtx['ok'][0]= not not ok
-		if warn!=None:
-			cCtx['warn'][0]= not not warn
-		if err!=None:
-			cCtx['err'][0]= not not err
-
-		return cCtx
+logging.setLogRecordFactory(hook)
 
 
 
-	@staticmethod
-	def verb(_msg):
-		kiLog.printOut('verb', kiLog.caller(), _msg)
+def names(_names, _state=True):
+	for name in _names:
+		if _state:
+			namesAllowed[name]= True
+			continue
 
-	@staticmethod
-	def ok(_msg):
-		kiLog.printOut('ok', kiLog.caller(), _msg)
+		if name in namesAllowed:
+			del namesAllowed[name]
+			
 
-	@staticmethod
-	def warn(_msg):
-		kiLog.printOut('warn', kiLog.caller(), _msg)
-
-	@staticmethod
-	def err(_msg):
-		kiLog.printOut('err', kiLog.caller(), _msg)
-
-
-	@staticmethod
-	def printOut(_lvl, _pfx, _msg):
-		cCtx= kiLog.getCtx(_pfx)
-
-		if (
-			not getA(cCtx, _lvl)
-			or len(cCtx[_lvl])!=2
-			or not cCtx[_lvl][0]
-		):
-			return
-
-		print(cCtx[_lvl][1] +':', _msg)
-
-
-
-
-
-	'''
-	get class name from which caller of caller() is called lol.
-	that is level-2 depth point
-	'''
-	@staticmethod
-	def caller():
-		stack= inspect.stack()
-		callObj= stack[2][0].f_locals
-
-		o= getA(callObj, 'self')
-		if o and hasattr(o,'__class__'):
-			return o.__class__.__name__
-
-		return getA(callObj, '__qualname__', '')
+def config(level= WARNING):
+	logging.basicConfig(level= level, format= '%(name)s %(levelname)s: %(message)s')
 
