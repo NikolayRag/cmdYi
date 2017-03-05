@@ -93,6 +93,9 @@ def execute(_args):
 	yi.cmd(Yi4kAPI.startViewFinder)
 
 
+	if _args['listen']:
+		listenSetup(yi)
+
 	for cCmd in cmdA:
 		cName= '_'.join( cCmd.commandName.split('-') )
 		if _args[cName] not in (None,False):
@@ -107,6 +110,35 @@ def execute(_args):
 
 
 	if _args['suspend']:
-		input("Press Enter to finish.")
+		input("Press Enter to finish.\n")
 
 	yi.close()
+
+
+
+def listenSetup(_yi):
+	_yi.setCB("start_video_record", listenCB("start_video_record"))
+	_yi.setCB("video_record_complete", listenCB("video_record_complete", ('param',)) )
+	_yi.setCB("start_photo_capture", listenCB("start_photo_capture"))
+	_yi.setCB("photo_taken", listenCB("photo_taken", ('param',)) )
+
+	_yi.setCB("vf_start", listenCB("vf_start"))
+	_yi.setCB("vf_stop", listenCB("vf_stop"))
+	_yi.setCB("battery", listenCB("battery", ('param',)) )
+	_yi.setCB("battery_status", listenCB("battery_status", ('param',)) )
+	_yi.setCB("adapter", listenCB("adapter", ('param',)) )
+	_yi.setCB("adapter_status", listenCB("adapter_status", ('param',)) )
+	_yi.setCB("sdcard_format_done", listenCB("sdcard_format_done"))
+	_yi.setCB("setting_changed", listenCB("setting_changed", ('param', 'value')) )
+
+
+
+def listenCB(_name, _params=()):
+	def cb(_res):
+		paramA= []
+		for cParam in _params:
+			paramA.append(', %s' % _res[cParam])
+		
+		print("Event: %s%s" % (_name, ''.join(paramA)))
+
+	return cb
