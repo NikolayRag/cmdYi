@@ -1,0 +1,21 @@
+v1.2
+	add:
+		- `-listen` flag for listen camera events untill keypress.
+		- switch viewfinder (rtsp) on at start.
+
+	change:
+		- logging moved to `logging` module.
+
+	bugfix:
+		- some command was incorrect.
+
+
+v1.1
+	change:
+		- Yi4kAPI used as submodule.
+
+
+v1.0
+	add:
+		- Basic get/set flags (`-getBuzerVolume`, `-setBuzerVolume`)
+		- Shoo photo/video ('-capturePhoto', '-startRecording' and '-stopRecording')
