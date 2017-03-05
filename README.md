@@ -1,5 +1,7 @@
-# Yi 4k commandline controller.
-Windows executable: https://github.com/NikolayRag/cmdYi/releases/download/untagged-5373808a0a95e7e56d35/cmdYi.exe
+# cmdYi
+Yi 4k commandline controller for PC  
+
+Windows executable: [cmdYi.zip](https://github.com/NikolayRag/cmdYi/releases/download/v1.2/cmdYi.exe)
 
 
 Using this tool you can:
