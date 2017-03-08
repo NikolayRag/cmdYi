@@ -46,6 +46,3 @@ if __name__ == '__main__':
 
 
 	cmdyi.execute(args)
-
-	import os
-	os._exit(0)
