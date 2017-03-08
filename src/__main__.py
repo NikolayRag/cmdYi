@@ -48,9 +48,13 @@ if __name__ == '__main__':
 
 	yi= cmdyi.init(args)
 	if yi:
-		cmdyi.execute(yi, args)
+		try:
+			cmdyi.execute(yi, args)
 
-		if args['listen']:
-			input("Press Enter to finish...\n")
+			if args['listen']:
+				input("Press Enter to finish...\n")
+
+		except KeyboardInterrupt:
+			None
 
 		yi.close()
