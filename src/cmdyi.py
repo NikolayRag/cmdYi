@@ -122,6 +122,8 @@ def listenSetup(_yi):
 	_yi.setCB("start_photo_capture", listenCB("start_photo_capture"))
 	_yi.setCB("photo_taken", listenCB("photo_taken", ('param',)) )
 
+	_yi.setCB("enter_album", listenCB("enter_album"))
+	_yi.setCB("exit_album", listenCB("exit_album"))
 	_yi.setCB("battery", listenCB("battery", ('param',)) )
 	_yi.setCB("battery_status", listenCB("battery_status", ('param',)) )
 	_yi.setCB("adapter", listenCB("adapter", ('param',)) )
