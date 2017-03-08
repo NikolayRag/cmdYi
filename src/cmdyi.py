@@ -83,35 +83,32 @@ cmdA= (
 )
 
 
-def execute(_args):
+def init(_args):
 	yi= Yi4kAPI.YiAPI()
 
-	if not yi.sock:
-		logging.error('Camera not found')
-		return
+	if yi.sock:
+		return yi
 
-	yi.cmd(Yi4kAPI.startViewFinder)
+	logging.error('Camera not found')
+
+
+
+def execute(_yi, _args):
+	_yi.cmd(Yi4kAPI.startViewFinder)
 
 
 	if _args['listen']:
-		listenSetup(yi)
+		listenSetup(_yi)
 
 	for cCmd in cmdA:
 		cName= '_'.join( cCmd.commandName.split('-') )
 		if _args[cName] not in (None,False):
 			if cCmd.values:
-				res= yi.cmd(cCmd, cCmd.values[int(_args[cName])])
+				res= _yi.cmd(cCmd, cCmd.values[int(_args[cName])])
 				print("%s: %s, %s" % (cName, cCmd.values.index(res),res))
 			else:
-				res= yi.cmd(cCmd, _args[cName])
+				res= _yi.cmd(cCmd, _args[cName])
 				print("%s: %s" % (cName, res))
-
-
-
-	if _args['listen']:
-		input("Press Enter to finish...\n")
-
-	yi.close()
 
 
 
