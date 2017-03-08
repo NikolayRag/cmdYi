@@ -83,35 +83,32 @@ cmdA= (
 )
 
 
-def execute(_args):
+def init(_args):
 	yi= Yi4kAPI.YiAPI()
 
-	if not yi.sock:
-		logging.error('Camera not found')
-		return
+	if yi.sock:
+		return yi
 
-	yi.cmd(Yi4kAPI.startViewFinder)
+	logging.error('Camera not found')
+
+
+
+def execute(_yi, _args):
+	_yi.cmd(Yi4kAPI.startViewFinder)
 
 
 	if _args['listen']:
-		listenSetup(yi)
+		listenSetup(_yi)
 
 	for cCmd in cmdA:
 		cName= '_'.join( cCmd.commandName.split('-') )
 		if _args[cName] not in (None,False):
 			if cCmd.values:
-				res= yi.cmd(cCmd, cCmd.values[int(_args[cName])])
+				res= _yi.cmd(cCmd, cCmd.values[int(_args[cName])])
 				print("%s: %s, %s" % (cName, cCmd.values.index(res),res))
 			else:
-				res= yi.cmd(cCmd, _args[cName])
+				res= _yi.cmd(cCmd, _args[cName])
 				print("%s: %s" % (cName, res))
-
-
-
-	if _args['listen']:
-		input("Press Enter to finish...\n")
-
-	yi.close()
 
 
 
@@ -122,8 +119,8 @@ def listenSetup(_yi):
 	_yi.setCB("start_photo_capture", listenCB("start_photo_capture"))
 	_yi.setCB("photo_taken", listenCB("photo_taken", ('param',)) )
 
-	_yi.setCB("vf_start", listenCB("vf_start"))
-	_yi.setCB("vf_stop", listenCB("vf_stop"))
+	_yi.setCB("enter_album", listenCB("enter_album"))
+	_yi.setCB("exit_album", listenCB("exit_album"))
 	_yi.setCB("battery", listenCB("battery", ('param',)) )
 	_yi.setCB("battery_status", listenCB("battery_status", ('param',)) )
 	_yi.setCB("adapter", listenCB("adapter", ('param',)) )

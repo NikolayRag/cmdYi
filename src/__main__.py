@@ -45,7 +45,16 @@ if __name__ == '__main__':
 
 
 
-	cmdyi.execute(args)
 
-	import os
-	os._exit(0)
+	yi= cmdyi.init(args)
+	if yi:
+		try:
+			cmdyi.execute(yi, args)
+
+			if args['listen']:
+				input("Listening...\n")
+
+		except KeyboardInterrupt:
+			None
+
+		yi.close()
