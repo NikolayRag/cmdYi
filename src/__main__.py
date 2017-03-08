@@ -52,7 +52,7 @@ if __name__ == '__main__':
 			cmdyi.execute(yi, args)
 
 			if args['listen']:
-				input("Press Enter to finish...\n")
+				input("Listening...\n")
 
 		except KeyboardInterrupt:
 			None
